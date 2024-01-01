@@ -465,7 +465,7 @@ class Network:
         # Choose name and scope.
         if self.name is None:
             self.name = self._build_func_name
-        self.scope = tf.get_default_graph().unique_name(self.name.replace('/', '_'), mark_as_used=False)
+        self.scope = tf.compat.v1.get_default_graph().unique_name(self.name.replace('/', '_'), mark_as_used=False)
         
         # Build template graph.
         with tf.variable_scope(self.scope, reuse=tf.AUTO_REUSE):
