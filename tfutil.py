@@ -12,7 +12,7 @@ import importlib
 import imp
 import numpy as np
 from collections import OrderedDict
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 #----------------------------------------------------------------------------
 # Convenience.
@@ -465,10 +465,10 @@ class Network:
         # Choose name and scope.
         if self.name is None:
             self.name = self._build_func_name
-        self.scope = tf.compat.v1.get_default_graph().unique_name(self.name.replace('/', '_'), mark_as_used=False)
+        self.scope = tf.get_default_graph().unique_name(self.name.replace('/', '_'), mark_as_used=False)
         
         # Build template graph.
-        with tf.compat.v1.variable_scope(self.scope, reuse=tf.AUTO_REUSE):
+        with tf.variable_scope(self.scope, reuse=tf.AUTO_REUSE):
             assert tf.get_variable_scope().name == self.scope
             with absolute_name_scope(self.scope): # ignore surrounding name_scope
                 with tf.control_dependencies(None): # ignore surrounding control_dependencies
