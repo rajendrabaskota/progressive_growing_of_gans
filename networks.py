@@ -24,9 +24,9 @@ def get_weight(shape, gain=np.sqrt(2), use_wscale=False, fan_in=None):
     std = gain / np.sqrt(fan_in) # He init
     if use_wscale:
         wscale = tf.constant(np.float32(std), name='wscale')
-        return tf.get_variable('weight', shape=shape, initializer=tf.initializers.random_normal()) * wscale
+        return tf.compat.v1.get_variable('weight', shape=shape, initializer=tf.initializers.random_normal()) * wscale
     else:
-        return tf.get_variable('weight', shape=shape, initializer=tf.initializers.random_normal(0, std))
+        return tf.compat.v1.get_variable('weight', shape=shape, initializer=tf.initializers.random_normal(0, std))
 
 #----------------------------------------------------------------------------
 # Fully-connected layer.
@@ -51,7 +51,7 @@ def conv2d(x, fmaps, kernel, gain=np.sqrt(2), use_wscale=False):
 # Apply bias to the given activation tensor.
 
 def apply_bias(x):
-    b = tf.get_variable('bias', shape=[x.shape[1]], initializer=tf.initializers.zeros())
+    b = tf.compat.v1.get_variable('bias', shape=[x.shape[1]], initializer=tf.initializers.zeros())
     b = tf.cast(b, x.dtype)
     if len(x.shape) == 2:
         return x + b
