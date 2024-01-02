@@ -473,7 +473,7 @@ class Network:
             with absolute_name_scope(self.scope): # ignore surrounding name_scope
                 with tf.control_dependencies(None): # ignore surrounding control_dependencies
                     self.input_templates = [tf.placeholder(tf.float32, name=name) for name in self.input_names]
-                    out_expr = self._build_func(*self.input_templates, is_template_graph=True, **self.static_kwargs)
+                    # out_expr = self._build_func(*self.input_templates, is_template_graph=True, **self.static_kwargs)
             
         # Collect outputs.
         assert is_tf_expression(out_expr) or isinstance(out_expr, tuple)
